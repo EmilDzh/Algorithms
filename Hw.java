@@ -1,24 +1,35 @@
-package Lesson3.Hw;
+package lesson4.HW;
+
+import java.util.Arrays;
 
 public class Hw {
-    public static void main(String[] args) {
-        //уровень сложности: 1. Написать рекурсивный метод получения чисел Фибоначчи
-        System.out.println(fibonachi(10));
-
-
+    public static int[] mergeSort(int[] src) {
+        if (src.length <= 1) return src;
+        int[] left = Arrays.copyOfRange(src, 0, src.length / 2);
+        int[] right = Arrays.copyOfRange(src, left.length, src.length);
+        return merge(mergeSort(left), mergeSort(right));
     }
 
-    static int  fibonachi(int n){
+    private static int[] merge(int[] left, int[] right) {
+        int resIn = 0, leftIn = 0, rightIn = 0;
+        int[] result = new int[left.length + right.length];
 
-        if (n == 0){
-            return 0;
-        }
-        if (n == 1){
-            return 1;
-        }
-        else{
-            return fibonachi(n - 1) + fibonachi(n - 2);
-        }
+        while (leftIn < left.length && rightIn < right.length)
+            if (left[leftIn] < right[rightIn])
+                result[resIn++] = left[leftIn++];
+            else result[resIn++] = right[rightIn++];
 
+        while (resIn < result.length)
+            if (leftIn != left.length)
+                result[resIn++] = left[leftIn++];
+            else result[resIn++] = right[rightIn++];
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int [] gg = {-2,33,44,1,2,54,6};
+
+        System.out.println(Arrays.toString(mergeSort(gg)));
     }
 }
