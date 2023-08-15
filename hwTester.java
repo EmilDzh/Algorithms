@@ -1,20 +1,26 @@
-package lesson6.HW;
+package lesson7.hw;
 
 public class hwTester {
     public static void main(String[] args) {
-        hwDynamicArray arr = new hwDynamicArray();
-        arr.add(1);
-        arr.add(2);
-        arr.add(3);
-        arr.add(4);
-        arr.add(5);
-        System.out.println(arr);//[1, 2, 3, 4, 5]
-        arr.add(-1);
-        System.out.println(arr);//[1, 2, 3, 4, 5, -1]
-        arr.add(2,-25);
-        System.out.println(arr);//[1, 2, -25, 3, 4, 5, -1]
-        arr.remove(3);
-        System.out.println(arr);//[1, 2, -25, 4, 5, -1]
+        myDoublyLinkedList myDoublyLinkedList = new myDoublyLinkedList();
+        myDoublyLinkedList.push(2);
+        myDoublyLinkedList.push(3);
+        myDoublyLinkedList.push(4);
+        myDoublyLinkedList.push(5);
+        System.out.println(myDoublyLinkedList);
+        myDoublyLinkedList.poll();
+        System.out.println(myDoublyLinkedList);
+
+        myArrayStack myArrayStack = new myArrayStack(5);
+
+        myArrayStack.push(5);
+        myArrayStack.push(6);
+        myArrayStack.push(7);
+        myArrayStack.push(8);
+        System.out.println(myArrayStack);
+        myArrayStack.pop();
+        System.out.println(myArrayStack);
+        System.out.println(myArrayStack.peek());
 
     }
 }
