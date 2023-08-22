@@ -1,35 +1,68 @@
-package lesson4.HW;
+package lesson8;
 
 import java.util.Arrays;
 
 public class Hw {
-    public static int[] mergeSort(int[] src) {
-        if (src.length <= 1) return src;
-        int[] left = Arrays.copyOfRange(src, 0, src.length / 2);
-        int[] right = Arrays.copyOfRange(src, left.length, src.length);
-        return merge(mergeSort(left), mergeSort(right));
-    }
-
-    private static int[] merge(int[] left, int[] right) {
-        int resIn = 0, leftIn = 0, rightIn = 0;
-        int[] result = new int[left.length + right.length];
-
-        while (leftIn < left.length && rightIn < right.length)
-            if (left[leftIn] < right[rightIn])
-                result[resIn++] = left[leftIn++];
-            else result[resIn++] = right[rightIn++];
-
-        while (resIn < result.length)
-            if (leftIn != left.length)
-                result[resIn++] = left[leftIn++];
-            else result[resIn++] = right[rightIn++];
-
-        return result;
-    }
 
     public static void main(String[] args) {
-        int [] gg = {-2,33,44,1,2,54,6};
 
-        System.out.println(Arrays.toString(mergeSort(gg)));
+        int[] weights = {10, 20, 30};
+        int[] values = {60, 100, 120};
+        int capacity = 50;
+
+        double result = fractionalKnapsack(weights, values, capacity);
+        System.out.println(result);
+
+    }// main
+
+    public static int fractionalKnapsack(int[] weights, int[] values, int capacity) {
+        // Создаем массив для хранения отношения весов к стоимостям
+        double[] ratios = new double[weights.length];
+
+        // Вычисляем отношение веса к стоимости для каждого предмета
+        for (int i = 0; i < weights.length; i++) {
+            ratios[i] = (double) weights[i] / values[i];
+        }
+
+        // Инициализируем общую стоимость рюкзака
+        int totalValue = 0;
+
+        // Пока у нас есть вместимость в рюкзаке
+        while (capacity > 0) {
+
+            // Инициализируем переменные для хранения индекса лучшего предмета
+            // и соответствующего ему отношения веса к стоимости
+            int bestItem = -1;
+            double bestRatio = 0;
+
+            // Проходимся по всем предметам
+            for (int i = 0; i < weights.length; i++) {
+                // Если у предмета еще остались вес и его отношение веса к стоимости больше текущего лучшего
+                if (weights[i] > 0 && ratios[i] > bestRatio) {
+                    bestRatio = ratios[i];
+                    bestItem = i;
+                }
+            }
+
+            // Если такого предмета не нашлось, то выходим из цикла
+            if (bestItem == -1)
+                break;
+
+            // Вычисляем, сколько предмета мы можем взять в рюкзак
+            int fraction = Math.min(weights[bestItem], capacity);
+
+            // Увеличиваем общую стоимость, добавляя стоимость предмета, умноженную на долю, которую мы взяли
+            totalValue += fraction * ratios[bestItem];
+
+            // Уменьшаем вес предмета и вместимость рюкзака на взятый предмет
+            weights[bestItem] -= fraction;
+            capacity -= fraction;
+        }
+
+        // Возвращаем общую стоимость предметов в рюкзаке
+
+        return totalValue;
+
+
     }
 }
